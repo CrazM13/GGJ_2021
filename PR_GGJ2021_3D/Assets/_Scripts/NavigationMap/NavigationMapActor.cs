@@ -98,12 +98,12 @@ public abstract class NavigationMapActor : MonoBehaviour {
 		pathTimeElapsed += Time.deltaTime;
 
 		Vector3 newPosition = GetPathAtTime(pathTimeElapsed);
-		Vector3 direction = (newPosition - transform.position).normalized;
+		Vector3 direction = newPosition - transform.position;
 		transform.position = newPosition;
 
 		if (direction.magnitude > 0) {
-			targetRotation = Quaternion.LookRotation(direction, Vector3.up);
-			transform.localRotation = Quaternion.Lerp(transform.localRotation, targetRotation, Time.deltaTime);
+			targetRotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
+			transform.localRotation = Quaternion.Lerp(transform.localRotation, targetRotation, Time.deltaTime * 10);
 		}
 
 		if (pathTimeElapsed >= pathTimeExpected) {

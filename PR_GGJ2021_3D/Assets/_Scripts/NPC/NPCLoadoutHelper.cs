@@ -1,56 +1,83 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 public static class NPCLoadoutHelper {
 	#region Decode
 	public static bool HasHat(uint loadout) {
-		return (loadout & ((uint) NPCLoadoutElements.HAT) >> 29) == 1;
+		return ((loadout & ((uint) NPCLoadoutElements.HAT)) >> 29) == 1;
 	}
 
 	public static uint GetHatStyle(uint loadout) {
-		return loadout & ((uint) NPCLoadoutElements.HAT_STYLE) >> 25;
+		return (loadout & ((uint) NPCLoadoutElements.HAT_STYLE)) >> 25;
 	}
 
 	public static bool HasBeard(uint loadout) {
-		return (loadout & ((uint) NPCLoadoutElements.BEARD) >> 24) == 1;
+		return ((loadout & ((uint) NPCLoadoutElements.BEARD)) >> 24) == 1;
 	}
 
 	public static uint GetBeardStyle(uint loadout) {
-		return loadout & ((uint) NPCLoadoutElements.BEARD_STYLE) >> 20;
+		return (loadout & ((uint) NPCLoadoutElements.BEARD_STYLE)) >> 20;
 	}
 
 	public static uint GetTorsoType(uint loadout) {
-		return loadout & ((uint) NPCLoadoutElements.TORSO) >> 18;
+		return (loadout & ((uint) NPCLoadoutElements.TORSO)) >> 18;
 	}
 
 	public static uint GetTorsoStyle(uint loadout) {
-		return loadout & ((uint) NPCLoadoutElements.TORSO_STYLE) >> 14;
+		return (loadout & ((uint) NPCLoadoutElements.TORSO_STYLE)) >> 14;
 	}
 
 	public static uint GetLegsType(uint loadout) {
-		return loadout & ((uint) NPCLoadoutElements.LEGS) >> 12;
+		return (loadout & ((uint) NPCLoadoutElements.LEGS)) >> 12;
 	}
 
 	public static uint GetLegsStyle(uint loadout) {
-		return loadout & ((uint) NPCLoadoutElements.LEGS_STYLE) >> 8;
+		return (loadout & ((uint) NPCLoadoutElements.LEGS_STYLE)) >> 8;
 	}
 
 	public static bool HasBoots(uint loadout) {
-		return (loadout & ((uint) NPCLoadoutElements.BOOTS) >> 7) == 1;
+		return ((loadout & ((uint) NPCLoadoutElements.BOOTS) >> 7)) == 1;
 	}
 
 	public static uint GetBootsStyle(uint loadout) {
-		return loadout & ((uint) NPCLoadoutElements.BOOTS_STYLE) >> 4;
+		return (loadout & ((uint) NPCLoadoutElements.BOOTS_STYLE)) >> 4;
 	}
 
 	public static bool HasGloves(uint loadout) {
-		return (loadout & ((uint) NPCLoadoutElements.GLOVES) >> 3) == 1;
+		return ((loadout & ((uint) NPCLoadoutElements.GLOVES) >> 3)) == 1;
 	}
 
 	public static uint GetGlovesStyle(uint loadout) {
 		return loadout & ((uint) NPCLoadoutElements.GLOVES_STYLE);
 	}
+
+
+	public static string ToString(uint loadout) {
+		StringBuilder stringBuilder = new StringBuilder();
+
+		stringBuilder.AppendLine($"Has Hat: {HasHat(loadout)}");
+		stringBuilder.AppendLine($"Hat Style: {GetHatStyle(loadout)}");
+
+		stringBuilder.AppendLine($"Has Beard: {HasBeard(loadout)}");
+		stringBuilder.AppendLine($"Beard Style: {GetBeardStyle(loadout)}");
+
+		stringBuilder.AppendLine($"Torso Type: {GetTorsoType(loadout)}");
+		stringBuilder.AppendLine($"Torso Style: {GetTorsoStyle(loadout)}");
+
+		stringBuilder.AppendLine($"Legs Type: {GetLegsType(loadout)}");
+		stringBuilder.AppendLine($"Legs Style: {GetLegsStyle(loadout)}");
+
+		stringBuilder.AppendLine($"Has Boots: {HasBoots(loadout)}");
+		stringBuilder.AppendLine($"Boots Style: {GetBootsStyle(loadout)}");
+
+		stringBuilder.AppendLine($"Has Gloves: {HasGloves(loadout)}");
+		stringBuilder.AppendLine($"Gloves Style: {GetGlovesStyle(loadout)}");
+
+		return stringBuilder.ToString();
+	}
+
 	#endregion
 
 	#region Encode
@@ -73,7 +100,7 @@ public static class NPCLoadoutHelper {
 		bool hasGloves = Random.Range(0, 2) == 1;
 		byte glovesStyleIndex = (byte) Random.Range(0, 8);
 
-		return CreateLoadoutString(hasHat, hatStyleIndex, hasBeard, beardStyleIndex, torsoStyleIndex, torsoStyleIndex, legsTypeIndex, legsStyleIndex, hasBoots, bootsStyleIndex, hasGloves, glovesStyleIndex);
+		return CreateLoadoutString(hasHat, hatStyleIndex, hasBeard, beardStyleIndex, torsoTypeIndex, torsoStyleIndex, legsTypeIndex, legsStyleIndex, hasBoots, bootsStyleIndex, hasGloves, glovesStyleIndex);
 	}
 
 	public static uint CreateLoadoutString(bool hasHat, byte hatStyleIndex, bool hasBeard, byte beardStyleIndex, byte torsoTypeIndex, byte torsoStyleIndex, byte legsTypeIndex, byte legsStyleIndex, bool hasBoots, byte bootsStyleIndex, bool hasGloves, byte glovesStyleIndex) {
@@ -90,18 +117,18 @@ public static class NPCLoadoutHelper {
 		}
 
 		{
-			ret |= ((uint) torsoTypeIndex) << 20;
-			ret |= ((uint) torsoStyleIndex) << 20;
+			ret |= ((uint) torsoTypeIndex) << 18;
+			ret |= ((uint) torsoStyleIndex) << 14;
 		}
 
 		{
-			ret |= ((uint) legsTypeIndex) << 20;
-			ret |= ((uint) legsStyleIndex) << 20;
+			ret |= ((uint) legsTypeIndex) << 12;
+			ret |= ((uint) legsStyleIndex) << 8;
 		}
 
 		if (hasBoots) {
 			ret |= (uint) NPCLoadoutElements.BOOTS;
-			ret |= ((uint) bootsStyleIndex) << 20;
+			ret |= ((uint) bootsStyleIndex) << 4;
 		}
 
 		if (hasGloves) {

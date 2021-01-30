@@ -48,13 +48,25 @@ public class NPCDialogue : MonoBehaviour {
 
 		uint targetLoadout = manager.GetTargetLoadout();
 
-		if (Random.Range(0f, 1f) > loyalty) GetLie(targetLoadout);
-		else if (Random.Range(0f, 1f) > loyalty) GetGuess(targetLoadout);
-		else GetTruth(targetLoadout);
+		if (Random.Range(0f, 1f) > loyalty) GetLie(npc, targetLoadout);
+		else if (Random.Range(0f, 1f) > loyalty) GetGuess(npc, targetLoadout);
+		else GetTruth(npc, targetLoadout);
 	}
 
-	public void GetLie(uint target) {
+	public void SetDialogue(string lines) {
+		player.IsInTextBox = true;
+
+		textbox.alpha = 1;
+		textbox.interactable = true;
+		textbox.blocksRaycasts = true;
+
+		foreach (char c in lines) buffer.Enqueue(c);
+	}
+
+	public void GetLie(NPCBase npc, uint target) {
 		int topic = Random.Range(0, 6);
+		string selected = "";
+
 		switch (topic) {
 			case 0:
 
@@ -63,7 +75,7 @@ public class NPCDialogue : MonoBehaviour {
 					colorHat = (uint) Random.Range(0, primaryPalletNames.Length);
 				} while (colorHat == NPCLoadoutHelper.GetHatStyle(target));
 
-				foreach (char c in $"Pretty sure I saw a {primaryPalletNames[colorHat]} Hat..") buffer.Enqueue(c);
+				selected = $"Pretty sure I saw a {primaryPalletNames[colorHat]} Hat..";
 
 				break;
 			case 1:
@@ -73,7 +85,7 @@ public class NPCDialogue : MonoBehaviour {
 					colorBeard = (uint) Random.Range(0, primaryPalletNames.Length);
 				} while (colorBeard == NPCLoadoutHelper.GetHatStyle(target));
 
-				foreach (char c in $"Pretty sure I saw a {primaryPalletNames[colorBeard]} Beard..") buffer.Enqueue(c);
+				selected = $"Pretty sure I saw a {primaryPalletNames[colorBeard]} Beard..";
 
 				break;
 			case 2:
@@ -83,7 +95,7 @@ public class NPCDialogue : MonoBehaviour {
 					colorTorso = (uint) Random.Range(0, primaryPalletNames.Length);
 				} while (colorTorso == NPCLoadoutHelper.GetHatStyle(target));
 
-				foreach (char c in $"Pretty sure I saw a {primaryPalletNames[colorTorso]} Torso..") buffer.Enqueue(c);
+				selected = $"Pretty sure I saw a {primaryPalletNames[colorTorso]} Torso..";
 
 				break;
 			case 3:
@@ -93,7 +105,7 @@ public class NPCDialogue : MonoBehaviour {
 					colorLegs = (uint) Random.Range(0, primaryPalletNames.Length);
 				} while (colorLegs == NPCLoadoutHelper.GetHatStyle(target));
 
-				foreach (char c in $"Pretty sure I saw a {primaryPalletNames[colorLegs]} Pants..") buffer.Enqueue(c);
+				selected = $"Pretty sure I saw a {primaryPalletNames[colorLegs]} Pants..";
 
 				break;
 			case 4:
@@ -103,7 +115,7 @@ public class NPCDialogue : MonoBehaviour {
 					colorBoots = (uint) Random.Range(0, secondaryPalletNames.Length);
 				} while (colorBoots == NPCLoadoutHelper.GetHatStyle(target));
 
-				foreach (char c in $"Pretty sure I saw a {secondaryPalletNames[colorBoots]} Boots..") buffer.Enqueue(c);
+				selected = $"Pretty sure I saw a {secondaryPalletNames[colorBoots]} Boots..";
 
 				break;
 			case 5:
@@ -113,68 +125,87 @@ public class NPCDialogue : MonoBehaviour {
 					colorGloves = (uint) Random.Range(0, secondaryPalletNames.Length);
 				} while (colorGloves == NPCLoadoutHelper.GetHatStyle(target));
 
-				foreach (char c in $"Pretty sure I saw a {secondaryPalletNames[colorGloves]} Gloves..") buffer.Enqueue(c);
+				selected = $"Pretty sure I saw a {secondaryPalletNames[colorGloves]} Gloves..";
 
 				break;
 		}
+
+		if (selected.Length > 0) {
+			foreach (char c in selected) buffer.Enqueue(c);
+			npc.StoreDialogue(selected);
+		}
 	}
 
-	public void GetGuess(uint target) {
+	public void GetGuess(NPCBase npc, uint target) {
 		int topic = Random.Range(0, 6);
+
+		string selected = "";
+
 		switch (topic) {
 			case 0:
 
 				uint colorHat = (uint)Random.Range(0, primaryPalletNames.Length);
 
-				foreach (char c in $"I think I saw a {primaryPalletNames[colorHat]} Hat..") buffer.Enqueue(c);
+				selected = $"I think I saw a {primaryPalletNames[colorHat]} Hat..";
 
 				break;
 			case 1:
 
 				uint colorBeard = (uint) Random.Range(0, primaryPalletNames.Length);
 
-				foreach (char c in $"I think I saw a {primaryPalletNames[colorBeard]} Beard..") buffer.Enqueue(c);
+				selected = $"I think I saw a {primaryPalletNames[colorBeard]} Beard..";
 
 				break;
 			case 2:
 
 				uint colorTorso = (uint) Random.Range(0, primaryPalletNames.Length);
 
-				foreach (char c in $"I think I saw a {primaryPalletNames[colorTorso]} Torso..") buffer.Enqueue(c);
+				selected = $"I think I saw a {primaryPalletNames[colorTorso]} Torso..";
 
 				break;
 			case 3:
 
 				uint colorLegs = (uint) Random.Range(0, primaryPalletNames.Length);
 
-				foreach (char c in $"I think I saw a {primaryPalletNames[colorLegs]} Pants..") buffer.Enqueue(c);
+				selected = $"I think I saw a {primaryPalletNames[colorLegs]} Pants..";
 
 				break;
 			case 4:
 
 				uint colorBoots = (uint) Random.Range(0, secondaryPalletNames.Length);
 
-				foreach (char c in $"I think I saw a {secondaryPalletNames[colorBoots]} Boots..") buffer.Enqueue(c);
+				selected = $"I think I saw a {secondaryPalletNames[colorBoots]} Boots..";
 
 				break;
 			case 5:
 
 				uint colorGloves = (uint) Random.Range(0, secondaryPalletNames.Length);
 
-				foreach (char c in $"I think I saw a {secondaryPalletNames[colorGloves]} Gloves..") buffer.Enqueue(c);
+				selected = $"I think I saw a {secondaryPalletNames[colorGloves]} Gloves..";
 
 				break;
 		}
+
+
+
+		if (selected.Length > 0) {
+			foreach (char c in selected) buffer.Enqueue(c);
+			npc.StoreDialogue(selected);
+		}
 	}
 
-	public void GetTruth(uint target) {
+	public void GetTruth(NPCBase npc, uint target) {
 		int topic = Random.Range(0, 6);
+
+		string selected = "";
+
 		switch (topic) {
 			case 0:
 
 				uint colorHat = NPCLoadoutHelper.GetHatStyle(target);
 
-				foreach (char c in $"Pretty sure I saw a {primaryPalletNames[colorHat]} Hat..") buffer.Enqueue(c);
+				Debug.Log(colorHat);
+				selected = $"Pretty sure I saw a {primaryPalletNames[colorHat]} Hat..";
 
 				break;
 			case 1:
@@ -182,37 +213,45 @@ public class NPCDialogue : MonoBehaviour {
 				uint colorBeard = NPCLoadoutHelper.GetBeardStyle(target);
 
 				Debug.Log(colorBeard);
-				foreach (char c in $"Pretty sure I saw a {primaryPalletNames[colorBeard]} Beard..") buffer.Enqueue(c);
+				selected = $"Pretty sure I saw a {primaryPalletNames[colorBeard]} Beard..";
 
 				break;
 			case 2:
 
 				uint colorTorso = NPCLoadoutHelper.GetTorsoStyle(target);
 
-				foreach (char c in $"Pretty sure I saw a {primaryPalletNames[colorTorso]} Torso..") buffer.Enqueue(c);
+				selected = $"Pretty sure I saw a {primaryPalletNames[colorTorso]} Torso..";
 
 				break;
 			case 3:
 
 				uint colorLegs = NPCLoadoutHelper.GetLegsStyle(target);
 
-				foreach (char c in $"Pretty sure I saw a {primaryPalletNames[colorLegs]} Pants..") buffer.Enqueue(c);
+				Debug.Log(colorLegs);
+				selected = $"Pretty sure I saw a {primaryPalletNames[colorLegs]} Pants..";
 
 				break;
 			case 4:
 
 				uint colorBoots = NPCLoadoutHelper.GetBootsStyle(target);
 
-				foreach (char c in $"Pretty sure I saw a {secondaryPalletNames[colorBoots]} Boots..") buffer.Enqueue(c);
+				Debug.Log(colorBoots);
+				selected = $"Pretty sure I saw a {secondaryPalletNames[colorBoots]} Boots..";
 
 				break;
 			case 5:
 
 				uint colorGloves = NPCLoadoutHelper.GetGlovesStyle(target);
 
-				foreach (char c in $"Pretty sure I saw a {secondaryPalletNames[colorGloves]} Gloves..") buffer.Enqueue(c);
+				Debug.Log(colorGloves);
+				selected = $"Pretty sure I saw a {secondaryPalletNames[colorGloves]} Gloves..";
 
 				break;
+		}
+
+		if (selected.Length > 0) {
+			foreach (char c in selected) buffer.Enqueue(c);
+			npc.StoreDialogue(selected);
 		}
 	}
 

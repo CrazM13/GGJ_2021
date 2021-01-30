@@ -5,12 +5,17 @@ using UnityEngine;
 public class NPCBase : NavigationMapActor {
 
 	[SerializeField] private float loyalty;
+	[SerializeField] private NavigationMapNode forcedStartNode;
 
 	private NPCManager manager;
 
 	private Animator animator;
 
+	private string storedLine = null;
+
 	void Start() {
+		if (forcedStartNode) TeleportToTargetNode(forcedStartNode);
+
 		loyalty = Random.value;
 		animator = GetComponent<Animator>();
 	}
@@ -30,6 +35,9 @@ public class NPCBase : NavigationMapActor {
 	}
 
 	public void SetLoadout(uint loadoutString, NPCPartsSettings settings) {
+
+		//Debug.Log(NPCLoadoutHelper.ToString(loadoutString));
+
 		if (NPCLoadoutHelper.HasHat(loadoutString)) {
 			uint style = NPCLoadoutHelper.GetHatStyle(loadoutString);
 
@@ -67,6 +75,18 @@ public class NPCBase : NavigationMapActor {
 
 			// Apply gloves model
 		}
+	}
+
+	public virtual string OnInteract() {
+		return storedLine;
+	}
+
+	public virtual void OnArrest() {
+		// LOSE
+	}
+
+	public void StoreDialogue(string lines) {
+		storedLine = lines;
 	}
 
 }

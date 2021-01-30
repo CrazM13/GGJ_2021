@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour {
 	[SerializeField] private Camera headCam;
 	[SerializeField] private NPCDialogue dialouge;
 
+	private float interactionCooldown = 1f;
+	private float maxInteractionCooldown = 0.25f;
+
 	private float standardFOV;
 	private float sprintFOV;
 	private float targetFOV;
@@ -58,7 +61,8 @@ public class PlayerController : MonoBehaviour {
 
 		UpdateMovement();
 		UpdateCamera();
-		Interact();
+		if (interactionCooldown <= 0) Interact();
+		else if (!IsInTextBox) interactionCooldown -= Time.deltaTime;
 	}
 
 	private void UpdateMovement() {
@@ -109,13 +113,28 @@ public class PlayerController : MonoBehaviour {
 		if (Physics.Raycast(headCam.transform.position, headCam.transform.forward, out RaycastHit hit, 10)) {
 			NPCBase npc = hit.collider.GetComponent<NPCBase>();
 			if (npc) {
-				dialouge.GetDialogue(npc);
+				interactionCooldown = maxInteractionCooldown;
+
+				string forcedLines = npc.OnInteract();
+				if (forcedLines != null) dialouge.SetDialogue(forcedLines);
+				else dialouge.GetDialogue(npc);
+
+				npc.SetTargetPositionOffPath(transform.position + transform.forward);
 			}
 		};
 	}
 
 	private void InteractArrest() {
+		if (Physics.Raycast(headCam.transform.position, headCam.transform.forward, out RaycastHit hit, 10)) {
+			NPCBase npc = hit.collider.GetComponent<NPCBase>();
+			if (npc) {
+				interactionCooldown = maxInteractionCooldown;
 
+				npc.OnArrest();
+
+				npc.SetTargetPositionOffPath(transform.position + transform.forward);
+			}
+		};
 	}
 
 }
