@@ -13,21 +13,25 @@ public class NPCBase : NavigationMapActor {
 
 	[SerializeField] protected NPCManager manager;
 
+	[SerializeField] protected bool canPath;
+
 	private Animator animator;
 
 	private string storedLine = null;
 
 	void Start() {
-		if (forcedStartNode) TeleportToTargetNode(forcedStartNode);
+		if (canPath && forcedStartNode) TeleportToTargetNode(forcedStartNode);
 
 		loyalty = Random.value;
 		animator = GetComponent<Animator>();
+
+		SetColorForMat(0, Color.black);
 	}
 
 	void Update() {
 		animator.SetBool("walking", IsNavigating);
 
-		if (IsNavigating) ContinueOnPath();
+		if (canPath && IsNavigating) ContinueOnPath();
 	}
 
 	public float GetLoyalty() {
@@ -40,7 +44,7 @@ public class NPCBase : NavigationMapActor {
 
 	public void SetLoadout(uint loadoutString, NPCPartsSettings settings) {
 
-		//Debug.Log(NPCLoadoutHelper.ToString(loadoutString));
+		Debug.Log(NPCLoadoutHelper.ToString(loadoutString));
 
 		if (NPCLoadoutHelper.HasHat(loadoutString)) {
 			uint style = NPCLoadoutHelper.GetHatStyle(loadoutString);
@@ -69,7 +73,7 @@ public class NPCBase : NavigationMapActor {
 			uint style = NPCLoadoutHelper.GetTorsoStyle(loadoutString);
 
 			// Apply torso model
-			baseModel.materials[0].color = settings.clothesPallet[style];
+			SetColorForMat(1, settings.clothesPallet[style]);
 		}
 
 		{
@@ -77,21 +81,21 @@ public class NPCBase : NavigationMapActor {
 			uint style = NPCLoadoutHelper.GetLegsStyle(loadoutString);
 
 			// Apply legs model
-			baseModel.materials[3].color = settings.clothesPallet[style];
+			SetColorForMat(3, settings.clothesPallet[style]);
 		}
 
 		if (NPCLoadoutHelper.HasBoots(loadoutString)) {
 			uint style = NPCLoadoutHelper.GetBootsStyle(loadoutString);
 
 			// Apply boots model
-			baseModel.materials[1].color = settings.extraPallet[style];
+			SetColorForMat(2, settings.clothesPallet[style]);
 		}
 
 		if (NPCLoadoutHelper.HasGloves(loadoutString)) {
 			uint style = NPCLoadoutHelper.GetGlovesStyle(loadoutString);
 
 			// Apply gloves model
-			baseModel.materials[4].color = settings.extraPallet[style];
+			SetColorForMat(4, settings.clothesPallet[style]);
 		}
 	}
 
@@ -105,6 +109,14 @@ public class NPCBase : NavigationMapActor {
 
 	public void StoreDialogue(string lines) {
 		storedLine = lines;
+	}
+
+	private void SetColorForMat(int index, Color color) {
+		Debug.Log(baseModel.materials.Length);
+
+		var materials = baseModel.materials;
+		materials[index].color = color;
+		baseModel.materials = materials;
 	}
 
 }

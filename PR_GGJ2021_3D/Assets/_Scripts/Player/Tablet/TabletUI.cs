@@ -90,7 +90,7 @@ public class TabletUI : MonoBehaviour, IPointerClickHandler {
 	}
 
 	public void ModifyTorsoStyle(uint torsoStyleIndex) {
-		if (NPCLoadoutHelper.GetTorsoType(storedLoadout) == 0) return;
+		//if (NPCLoadoutHelper.GetTorsoType(storedLoadout) == 0) return;
 
 		storedLoadout = NPCLoadoutHelper.ModifyTorsoStyle(storedLoadout, torsoStyleIndex);
 		npc.SetLoadout(storedLoadout, settings);
@@ -102,7 +102,7 @@ public class TabletUI : MonoBehaviour, IPointerClickHandler {
 	}
 
 	public void ModifyLegsStyle(uint legsStyleIndex) {
-		if (NPCLoadoutHelper.GetLegsType(storedLoadout) == 0) return;
+		//if (NPCLoadoutHelper.GetLegsType(storedLoadout) == 0) return;
 
 		storedLoadout = NPCLoadoutHelper.ModifyLegsStyle(storedLoadout, legsStyleIndex);
 		npc.SetLoadout(storedLoadout, settings);
@@ -110,12 +110,12 @@ public class TabletUI : MonoBehaviour, IPointerClickHandler {
 
 	public void ModifyBoots(bool hasBoots) {
 		storedLoadout = NPCLoadoutHelper.ModifyBoots(storedLoadout, hasBoots);
-		if (!hasBoots) storedLoadout = NPCLoadoutHelper.ModifyBootsStyle(storedLoadout, 0);
+		//if (!hasBoots) storedLoadout = NPCLoadoutHelper.ModifyBootsStyle(storedLoadout, 0);
 		npc.SetLoadout(storedLoadout, settings);
 	}
 
 	public void ModifyBootsStyle(uint bootsStyleIndex) {
-		if (!NPCLoadoutHelper.HasBoots(storedLoadout)) return;
+		//if (!NPCLoadoutHelper.HasBoots(storedLoadout)) return;
 
 		storedLoadout = NPCLoadoutHelper.ModifyBootsStyle(storedLoadout, bootsStyleIndex);
 		npc.SetLoadout(storedLoadout, settings);
@@ -123,12 +123,12 @@ public class TabletUI : MonoBehaviour, IPointerClickHandler {
 
 	public void ModifyGloves(bool hasGloves) {
 		storedLoadout = NPCLoadoutHelper.ModifyGloves(storedLoadout, hasGloves);
-		if (!hasGloves) storedLoadout = NPCLoadoutHelper.ModifyGlovesStyle(storedLoadout, 0);
+		//if (!hasGloves) storedLoadout = NPCLoadoutHelper.ModifyGlovesStyle(storedLoadout, 0);
 		npc.SetLoadout(storedLoadout, settings);
 	}
 
 	public void ModifyGlovesStyle(uint glovesStyleIndex) {
-		if (!NPCLoadoutHelper.HasGloves(storedLoadout)) return;
+		//if (!NPCLoadoutHelper.HasGloves(storedLoadout)) return;
 
 		storedLoadout = NPCLoadoutHelper.ModifyGlovesStyle(storedLoadout, glovesStyleIndex);
 		npc.SetLoadout(storedLoadout, settings);

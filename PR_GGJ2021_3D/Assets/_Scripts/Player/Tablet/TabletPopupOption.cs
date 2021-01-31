@@ -11,6 +11,9 @@ public class TabletPopupOption : MonoBehaviour, IPointerClickHandler {
 	[SerializeField] private uint newValue;
 
 	public void OnPointerClick(PointerEventData eventData) {
+
+		Debug.Log("O CLICK");
+
 		switch (element) {
 			case NPCLoadoutElements.HAT:
 				tabletUI.ModifyHat(newValue == 1);
