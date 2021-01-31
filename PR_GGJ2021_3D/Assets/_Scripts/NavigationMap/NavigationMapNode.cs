@@ -42,7 +42,7 @@ public class NavigationMapNode : MonoBehaviour {
 
 #if UNITY_EDITOR
 
-	private void OnDrawGizmos() {
+	private void OnDrawGizmosSelected() {
 		Color nodeColour = nodeType == NavigationMapNodeTypes.REST ? Color.red : Color.white;
 
 		Gizmos.color = nodeColour;
@@ -57,6 +57,8 @@ public class NavigationMapNode : MonoBehaviour {
 			Gizmos.color = connection.GetNodeType() == NavigationMapNodeTypes.REST ? Color.red : nodeColour;
 			Gizmos.DrawLine(transform.position, connection.transform.position);
 			DrawRay(transform.position, (connection.transform.position - transform.position).normalized, Color.white);
+
+			DrawNode(connection);
 		}
 
 		Gizmos.color = nodeColour;
@@ -66,6 +68,35 @@ public class NavigationMapNode : MonoBehaviour {
 			Gizmos.color = Color.red;
 			Gizmos.DrawLine(transform.position, stop.transform.position);
 			DrawRay(transform.position, (stop.transform.position - transform.position).normalized, Color.red);
+
+			DrawNode(stop);
+		}
+	}
+
+	private static void DrawNode(NavigationMapNode node) {
+		Color nodeColour = node.nodeType == NavigationMapNodeTypes.REST ? Color.red : Color.white;
+
+		Gizmos.color = nodeColour;
+		Gizmos.DrawSphere(node.transform.position, 0.1f);
+
+		Handles.color = nodeColour;
+		Handles.DrawWireDisc(node.transform.position, Vector3.up, node.nodeRadius);
+
+		foreach (NavigationMapNode connection in node.connections) {
+			if (connection == null) continue;
+
+			Gizmos.color = connection.GetNodeType() == NavigationMapNodeTypes.REST ? Color.red : nodeColour;
+			Gizmos.DrawLine(node.transform.position, connection.transform.position);
+			DrawRay(node.transform.position, (connection.transform.position - node.transform.position).normalized, Color.white);
+		}
+
+		Gizmos.color = nodeColour;
+		foreach (NavigationMapNode stop in node.stopNodes) {
+			if (stop == null) continue;
+
+			Gizmos.color = Color.red;
+			Gizmos.DrawLine(node.transform.position, stop.transform.position);
+			DrawRay(node.transform.position, (stop.transform.position - node.transform.position).normalized, Color.red);
 		}
 	}
 

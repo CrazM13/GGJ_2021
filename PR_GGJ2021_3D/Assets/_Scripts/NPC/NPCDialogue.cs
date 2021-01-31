@@ -52,8 +52,8 @@ public class NPCDialogue : MonoBehaviour {
 
 		uint targetLoadout = manager.GetTargetLoadout();
 
-		if (Random.Range(0f, 1f) > loyalty) GetLie(npc, targetLoadout);
-		else if (Random.Range(0f, 1f) > loyalty) GetGuess(npc, targetLoadout);
+		if (Random.Range(0f, 0.5f) > loyalty) GetLie(npc, targetLoadout);
+		else if (Random.Range(0f, 0.5f) > loyalty) GetGuess(npc, targetLoadout);
 		else GetTruth(npc, targetLoadout);
 	}
 
@@ -208,16 +208,16 @@ public class NPCDialogue : MonoBehaviour {
 
 				uint colorHat = NPCLoadoutHelper.GetHatStyle(target);
 
-				Debug.Log(colorHat);
-				selected = $"{strTruth} a {primaryPalletNames[colorHat]} Hat..";
+				if (NPCLoadoutHelper.HasHat(target)) selected = $"{strTruth} a {primaryPalletNames[colorHat]} Hat..";
+				else selected = $"{strTruth} no Hat..";
 
 				break;
 			case 1:
 
 				uint colorBeard = NPCLoadoutHelper.GetBeardStyle(target);
 
-				Debug.Log(colorBeard);
-				selected = $"{strTruth} a {primaryPalletNames[colorBeard]} Beard..";
+				if (NPCLoadoutHelper.HasHat(target)) selected = $"{strTruth} a {primaryPalletNames[colorBeard]} Beard..";
+				else selected = $"{strTruth} no Beard..";
 
 				break;
 			case 2:

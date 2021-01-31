@@ -30,7 +30,7 @@ public class NPCBase : NavigationMapActor {
 	void Update() {
 		animator.SetBool("walking", IsNavigating);
 
-		if (canPath && IsNavigating) ContinueOnPath();
+		if (canPath) ContinueOnPath();
 	}
 
 	public float GetLoyalty() {
