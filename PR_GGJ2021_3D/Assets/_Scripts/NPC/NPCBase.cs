@@ -25,7 +25,6 @@ public class NPCBase : NavigationMapActor {
 		loyalty = Random.value;
 		animator = GetComponent<Animator>();
 
-		SetColorForMat(0, Color.black);
 	}
 
 	void Update() {
@@ -44,7 +43,7 @@ public class NPCBase : NavigationMapActor {
 
 	public void SetLoadout(uint loadoutString, NPCPartsSettings settings) {
 
-		Debug.Log(NPCLoadoutHelper.ToString(loadoutString));
+		//Debug.Log(NPCLoadoutHelper.ToString(loadoutString));
 
 		if (NPCLoadoutHelper.HasHat(loadoutString)) {
 			uint style = NPCLoadoutHelper.GetHatStyle(loadoutString);
@@ -84,18 +83,18 @@ public class NPCBase : NavigationMapActor {
 			SetColorForMat(3, settings.clothesPallet[style]);
 		}
 
-		if (NPCLoadoutHelper.HasBoots(loadoutString)) {
+		{
 			uint style = NPCLoadoutHelper.GetBootsStyle(loadoutString);
 
 			// Apply boots model
-			SetColorForMat(2, settings.clothesPallet[style]);
+			SetColorForMat(4, settings.extraPallet[style]);
 		}
 
-		if (NPCLoadoutHelper.HasGloves(loadoutString)) {
+		{
 			uint style = NPCLoadoutHelper.GetGlovesStyle(loadoutString);
 
 			// Apply gloves model
-			SetColorForMat(4, settings.clothesPallet[style]);
+			SetColorForMat(2, settings.extraPallet[style]);
 		}
 	}
 
@@ -112,8 +111,6 @@ public class NPCBase : NavigationMapActor {
 	}
 
 	private void SetColorForMat(int index, Color color) {
-		Debug.Log(baseModel.materials.Length);
-
 		var materials = baseModel.materials;
 		materials[index].color = color;
 		baseModel.materials = materials;

@@ -51,6 +51,9 @@ public class TabletUI : MonoBehaviour, IPointerClickHandler {
 	// Start is called before the first frame update
 	void Start() {
 		rectTransform = GetComponent<RectTransform>();
+
+		storedLoadout = NPCLoadoutHelper.CreateLoadoutString(false, 0, false, 0, 3, 0, 3, 0, true, 0, true, 0);
+		npc.SetLoadout(storedLoadout, settings);
 	}
 
 	// Update is called once per frame
@@ -109,7 +112,7 @@ public class TabletUI : MonoBehaviour, IPointerClickHandler {
 	}
 
 	public void ModifyBoots(bool hasBoots) {
-		storedLoadout = NPCLoadoutHelper.ModifyBoots(storedLoadout, hasBoots);
+		//storedLoadout = NPCLoadoutHelper.ModifyBoots(storedLoadout, hasBoots);
 		//if (!hasBoots) storedLoadout = NPCLoadoutHelper.ModifyBootsStyle(storedLoadout, 0);
 		npc.SetLoadout(storedLoadout, settings);
 	}
@@ -122,7 +125,7 @@ public class TabletUI : MonoBehaviour, IPointerClickHandler {
 	}
 
 	public void ModifyGloves(bool hasGloves) {
-		storedLoadout = NPCLoadoutHelper.ModifyGloves(storedLoadout, hasGloves);
+		//storedLoadout = NPCLoadoutHelper.ModifyGloves(storedLoadout, hasGloves);
 		//if (!hasGloves) storedLoadout = NPCLoadoutHelper.ModifyGlovesStyle(storedLoadout, 0);
 		npc.SetLoadout(storedLoadout, settings);
 	}
@@ -130,7 +133,9 @@ public class TabletUI : MonoBehaviour, IPointerClickHandler {
 	public void ModifyGlovesStyle(uint glovesStyleIndex) {
 		//if (!NPCLoadoutHelper.HasGloves(storedLoadout)) return;
 
+		Debug.Log(NPCLoadoutHelper.ToString(storedLoadout));
 		storedLoadout = NPCLoadoutHelper.ModifyGlovesStyle(storedLoadout, glovesStyleIndex);
+		Debug.Log(NPCLoadoutHelper.ToString(storedLoadout));
 		npc.SetLoadout(storedLoadout, settings);
 	}
 

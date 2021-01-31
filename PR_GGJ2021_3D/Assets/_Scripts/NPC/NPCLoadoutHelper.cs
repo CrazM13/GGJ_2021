@@ -126,12 +126,12 @@ public static class NPCLoadoutHelper {
 			ret |= ((uint) legsStyleIndex) << 8;
 		}
 
-		if (hasBoots) {
+		{
 			ret |= (uint) NPCLoadoutElements.BOOTS;
 			ret |= ((uint) bootsStyleIndex) << 4;
 		}
 
-		if (hasGloves) {
+		{
 			ret |= (uint) NPCLoadoutElements.GLOVES;
 			ret |= ((uint) glovesStyleIndex);
 		}
@@ -230,9 +230,15 @@ public static class NPCLoadoutHelper {
 	}
 
 	public static uint ModifyGlovesStyle(uint loadout, uint glovesStyleIndex) {
+		Debug.Log("Before = " + System.Convert.ToString(loadout, 2));
+
 		loadout &= ~((uint) NPCLoadoutElements.GLOVES_STYLE);
 
+		Debug.Log("During = " + System.Convert.ToString(loadout, 2));
+
 		loadout |= glovesStyleIndex;
+
+		Debug.Log("After = " + System.Convert.ToString(loadout, 2));
 
 		return loadout;
 	}
