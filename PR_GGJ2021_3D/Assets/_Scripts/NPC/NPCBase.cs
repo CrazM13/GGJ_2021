@@ -7,6 +7,9 @@ public class NPCBase : NavigationMapActor {
 	[SerializeField] private float loyalty;
 	[SerializeField] private NavigationMapNode forcedStartNode;
 
+	[SerializeField] private GameObject hatModel;
+	[SerializeField] private GameObject beardModel;
+
 	private NPCManager manager;
 
 	private Animator animator;
@@ -42,12 +45,22 @@ public class NPCBase : NavigationMapActor {
 			uint style = NPCLoadoutHelper.GetHatStyle(loadoutString);
 
 			// Apply hat model
+			hatModel.SetActive(true);
+
+			hatModel.GetComponent<MeshRenderer>().material.color = settings.clothesPallet[style];
+		} else {
+			hatModel.SetActive(false);
 		}
 
 		if (NPCLoadoutHelper.HasBeard(loadoutString)) {
 			uint style = NPCLoadoutHelper.GetBeardStyle(loadoutString);
 
 			// Apply beard model
+			beardModel.SetActive(true);
+
+			beardModel.GetComponent<MeshRenderer>().material.color = settings.clothesPallet[style];
+		} else {
+			beardModel.SetActive(false);
 		}
 
 		{
@@ -82,7 +95,7 @@ public class NPCBase : NavigationMapActor {
 	}
 
 	public virtual void OnArrest() {
-		// LOSE
+		ScenesManager.instance.Lose();
 	}
 
 	public void StoreDialogue(string lines) {

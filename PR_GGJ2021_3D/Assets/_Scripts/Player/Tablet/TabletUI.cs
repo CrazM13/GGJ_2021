@@ -12,6 +12,9 @@ public class TabletUI : MonoBehaviour, IPointerClickHandler {
 
 	private CanvasGroup openGroup;
 
+	[SerializeField] private NPCBase npc;
+	[SerializeField] private NPCPartsSettings settings;
+
 	private uint storedLoadout = 0;
 
 	public void OnPointerClick(PointerEventData eventData) {
@@ -56,50 +59,82 @@ public class TabletUI : MonoBehaviour, IPointerClickHandler {
 	}
 
 	public void ModifyHat(bool hasHat) {
-		NPCLoadoutHelper.ModifyHat(storedLoadout, hasHat);
+		storedLoadout = NPCLoadoutHelper.ModifyHat(storedLoadout, hasHat);
+		if (!hasHat) storedLoadout = NPCLoadoutHelper.ModifyHatStyle(storedLoadout, 0);
+		npc.SetLoadout(storedLoadout, settings);
 	}
 
 	public void ModifyHatStyle(uint hatStyleIndex) {
-		NPCLoadoutHelper.ModifyHatStyle(storedLoadout, hatStyleIndex);
+		if (!NPCLoadoutHelper.HasHat(storedLoadout)) return;
+
+		storedLoadout = NPCLoadoutHelper.ModifyHatStyle(storedLoadout, hatStyleIndex);
+		npc.SetLoadout(storedLoadout, settings);
 	}
 
 	public void ModifyBeard(bool hasBeard) {
-		NPCLoadoutHelper.ModifyBeard(storedLoadout, hasBeard);
+		storedLoadout = NPCLoadoutHelper.ModifyBeard(storedLoadout, hasBeard);
+		if (!hasBeard) storedLoadout = NPCLoadoutHelper.ModifyBeardStyle(storedLoadout, 0);
+		npc.SetLoadout(storedLoadout, settings);
 	}
 
 	public void ModifyBeardStyle(uint beardStyleIndex) {
-		NPCLoadoutHelper.ModifyBeardStyle(storedLoadout, beardStyleIndex);
+		if (!NPCLoadoutHelper.HasBeard(storedLoadout)) return;
+
+		storedLoadout = NPCLoadoutHelper.ModifyBeardStyle(storedLoadout, beardStyleIndex);
+		npc.SetLoadout(storedLoadout, settings);
 	}
 
 	public void ModifyTorsoType(uint torsoTypeIndex) {
-		NPCLoadoutHelper.ModifyTorsoType(storedLoadout, torsoTypeIndex);
+		storedLoadout = NPCLoadoutHelper.ModifyTorsoType(storedLoadout, torsoTypeIndex);
+		npc.SetLoadout(storedLoadout, settings);
 	}
 
 	public void ModifyTorsoStyle(uint torsoStyleIndex) {
-		NPCLoadoutHelper.ModifyTorsoStyle(storedLoadout, torsoStyleIndex);
+		if (NPCLoadoutHelper.GetTorsoType(storedLoadout) == 0) return;
+
+		storedLoadout = NPCLoadoutHelper.ModifyTorsoStyle(storedLoadout, torsoStyleIndex);
+		npc.SetLoadout(storedLoadout, settings);
 	}
 
 	public void ModifyLegsType(uint legsTypeIndex) {
-		NPCLoadoutHelper.ModifyLegsType(storedLoadout, legsTypeIndex);
+		storedLoadout = NPCLoadoutHelper.ModifyLegsType(storedLoadout, legsTypeIndex);
+		npc.SetLoadout(storedLoadout, settings);
 	}
 
 	public void ModifyLegsStyle(uint legsStyleIndex) {
-		NPCLoadoutHelper.ModifyLegsStyle(storedLoadout, legsStyleIndex);
+		if (NPCLoadoutHelper.GetLegsType(storedLoadout) == 0) return;
+
+		storedLoadout = NPCLoadoutHelper.ModifyLegsStyle(storedLoadout, legsStyleIndex);
+		npc.SetLoadout(storedLoadout, settings);
 	}
 
 	public void ModifyBoots(bool hasBoots) {
-		NPCLoadoutHelper.ModifyBoots(storedLoadout, hasBoots);
+		storedLoadout = NPCLoadoutHelper.ModifyBoots(storedLoadout, hasBoots);
+		if (!hasBoots) storedLoadout = NPCLoadoutHelper.ModifyBootsStyle(storedLoadout, 0);
+		npc.SetLoadout(storedLoadout, settings);
 	}
 
 	public void ModifyBootsStyle(uint bootsStyleIndex) {
-		NPCLoadoutHelper.ModifyBootsStyle(storedLoadout, bootsStyleIndex);
+		if (!NPCLoadoutHelper.HasBoots(storedLoadout)) return;
+
+		storedLoadout = NPCLoadoutHelper.ModifyBootsStyle(storedLoadout, bootsStyleIndex);
+		npc.SetLoadout(storedLoadout, settings);
 	}
 
 	public void ModifyGloves(bool hasGloves) {
-		NPCLoadoutHelper.ModifyGloves(storedLoadout, hasGloves);
+		storedLoadout = NPCLoadoutHelper.ModifyGloves(storedLoadout, hasGloves);
+		if (!hasGloves) storedLoadout = NPCLoadoutHelper.ModifyGlovesStyle(storedLoadout, 0);
+		npc.SetLoadout(storedLoadout, settings);
 	}
 
 	public void ModifyGlovesStyle(uint glovesStyleIndex) {
-		NPCLoadoutHelper.ModifyGlovesStyle(storedLoadout, glovesStyleIndex);
+		if (!NPCLoadoutHelper.HasGloves(storedLoadout)) return;
+
+		storedLoadout = NPCLoadoutHelper.ModifyGlovesStyle(storedLoadout, glovesStyleIndex);
+		npc.SetLoadout(storedLoadout, settings);
+	}
+
+	public uint GetStoredLoadout() {
+		return storedLoadout;
 	}
 }

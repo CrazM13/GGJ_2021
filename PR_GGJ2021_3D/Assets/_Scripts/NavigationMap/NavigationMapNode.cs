@@ -70,6 +70,8 @@ public class NavigationMapNode : MonoBehaviour {
 	}
 
 	private static void DrawRay(Vector3 pos, Vector3 direction, Color color, float arrowHeadLength = 0.25f, float arrowHeadAngle = 20.0f) {
+		if (direction.magnitude <= 0) return;
+
 		Color storedColour = Gizmos.color;
 		Gizmos.color = color;
 		Vector3 right = Quaternion.LookRotation(direction) * Quaternion.Euler(0, 180 + arrowHeadAngle, 0) * new Vector3(0, 0, 1);

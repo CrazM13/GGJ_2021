@@ -4,8 +4,19 @@ using UnityEngine;
 
 public class NPCSleuth : NPCBase {
 
+	[SerializeField] private TabletUI tablet;
+	[SerializeField] private NPCManager manager;
+
 	public override string OnInteract() {
-		return "TEST TEST TEST TEST TEST";
+		return "Talk to me when you know who it is";
+	}
+
+	public override void OnArrest() {
+		if (tablet.GetStoredLoadout() == manager.GetTargetLoadout()) {
+			ScenesManager.instance.Win();
+		} else {
+			ScenesManager.instance.Lose();
+		}
 	}
 
 }

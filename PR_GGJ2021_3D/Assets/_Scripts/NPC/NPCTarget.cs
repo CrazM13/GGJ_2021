@@ -5,7 +5,7 @@ using UnityEngine;
 public class NPCTarget : NPCBase {
 
 	public override void OnArrest() {
-		// WIN
+		ScenesManager.instance.Win();
 	}
 
 }
