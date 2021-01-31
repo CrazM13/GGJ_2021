@@ -11,6 +11,10 @@ public class NPCDialogue : MonoBehaviour {
 	[SerializeField] private CanvasGroup textbox;
 	[SerializeField] private Text text;
 
+	private const string strLie = "Yeah there was";
+	private const string strGuess = "I think I saw";
+	private const string strTruth = "I'm pretty sure there were";
+
 	private readonly string[] primaryPalletNames = new string[] {
 		"Red",
 		"Orange",
@@ -75,7 +79,7 @@ public class NPCDialogue : MonoBehaviour {
 					colorHat = (uint) Random.Range(0, primaryPalletNames.Length);
 				} while (colorHat == NPCLoadoutHelper.GetHatStyle(target));
 
-				selected = $"Pretty sure I saw a {primaryPalletNames[colorHat]} Hat..";
+				selected = $"{strLie} a {primaryPalletNames[colorHat]} Hat..";
 
 				break;
 			case 1:
@@ -85,7 +89,7 @@ public class NPCDialogue : MonoBehaviour {
 					colorBeard = (uint) Random.Range(0, primaryPalletNames.Length);
 				} while (colorBeard == NPCLoadoutHelper.GetHatStyle(target));
 
-				selected = $"Pretty sure I saw a {primaryPalletNames[colorBeard]} Beard..";
+				selected = $"{strLie} a {primaryPalletNames[colorBeard]} Beard..";
 
 				break;
 			case 2:
@@ -95,7 +99,7 @@ public class NPCDialogue : MonoBehaviour {
 					colorTorso = (uint) Random.Range(0, primaryPalletNames.Length);
 				} while (colorTorso == NPCLoadoutHelper.GetHatStyle(target));
 
-				selected = $"Pretty sure I saw a {primaryPalletNames[colorTorso]} Torso..";
+				selected = $"{strLie} a {primaryPalletNames[colorTorso]} Shirt..";
 
 				break;
 			case 3:
@@ -105,7 +109,7 @@ public class NPCDialogue : MonoBehaviour {
 					colorLegs = (uint) Random.Range(0, primaryPalletNames.Length);
 				} while (colorLegs == NPCLoadoutHelper.GetHatStyle(target));
 
-				selected = $"Pretty sure I saw a {primaryPalletNames[colorLegs]} Pants..";
+				selected = $"{strLie} {primaryPalletNames[colorLegs]} Pants..";
 
 				break;
 			case 4:
@@ -115,7 +119,7 @@ public class NPCDialogue : MonoBehaviour {
 					colorBoots = (uint) Random.Range(0, secondaryPalletNames.Length);
 				} while (colorBoots == NPCLoadoutHelper.GetHatStyle(target));
 
-				selected = $"Pretty sure I saw a {secondaryPalletNames[colorBoots]} Boots..";
+				selected = $"{strLie} {secondaryPalletNames[colorBoots]} Boots..";
 
 				break;
 			case 5:
@@ -125,7 +129,7 @@ public class NPCDialogue : MonoBehaviour {
 					colorGloves = (uint) Random.Range(0, secondaryPalletNames.Length);
 				} while (colorGloves == NPCLoadoutHelper.GetHatStyle(target));
 
-				selected = $"Pretty sure I saw a {secondaryPalletNames[colorGloves]} Gloves..";
+				selected = $"{strLie} {secondaryPalletNames[colorGloves]} Gloves..";
 
 				break;
 		}
@@ -146,42 +150,42 @@ public class NPCDialogue : MonoBehaviour {
 
 				uint colorHat = (uint)Random.Range(0, primaryPalletNames.Length);
 
-				selected = $"I think I saw a {primaryPalletNames[colorHat]} Hat..";
+				selected = $"{strGuess} a {primaryPalletNames[colorHat]} Hat..";
 
 				break;
 			case 1:
 
 				uint colorBeard = (uint) Random.Range(0, primaryPalletNames.Length);
 
-				selected = $"I think I saw a {primaryPalletNames[colorBeard]} Beard..";
+				selected = $"{strGuess} a {primaryPalletNames[colorBeard]} Beard..";
 
 				break;
 			case 2:
 
 				uint colorTorso = (uint) Random.Range(0, primaryPalletNames.Length);
 
-				selected = $"I think I saw a {primaryPalletNames[colorTorso]} Torso..";
+				selected = $"{strGuess} a {primaryPalletNames[colorTorso]} Shirt..";
 
 				break;
 			case 3:
 
 				uint colorLegs = (uint) Random.Range(0, primaryPalletNames.Length);
 
-				selected = $"I think I saw a {primaryPalletNames[colorLegs]} Pants..";
+				selected = $"{strGuess} {primaryPalletNames[colorLegs]} Pants..";
 
 				break;
 			case 4:
 
 				uint colorBoots = (uint) Random.Range(0, secondaryPalletNames.Length);
 
-				selected = $"I think I saw a {secondaryPalletNames[colorBoots]} Boots..";
+				selected = $"{strGuess} {secondaryPalletNames[colorBoots]} Boots..";
 
 				break;
 			case 5:
 
 				uint colorGloves = (uint) Random.Range(0, secondaryPalletNames.Length);
 
-				selected = $"I think I saw a {secondaryPalletNames[colorGloves]} Gloves..";
+				selected = $"{strGuess} {secondaryPalletNames[colorGloves]} Gloves..";
 
 				break;
 		}
@@ -205,7 +209,7 @@ public class NPCDialogue : MonoBehaviour {
 				uint colorHat = NPCLoadoutHelper.GetHatStyle(target);
 
 				Debug.Log(colorHat);
-				selected = $"Pretty sure I saw a {primaryPalletNames[colorHat]} Hat..";
+				selected = $"{strTruth} a {primaryPalletNames[colorHat]} Hat..";
 
 				break;
 			case 1:
@@ -213,38 +217,35 @@ public class NPCDialogue : MonoBehaviour {
 				uint colorBeard = NPCLoadoutHelper.GetBeardStyle(target);
 
 				Debug.Log(colorBeard);
-				selected = $"Pretty sure I saw a {primaryPalletNames[colorBeard]} Beard..";
+				selected = $"{strTruth} a {primaryPalletNames[colorBeard]} Beard..";
 
 				break;
 			case 2:
 
 				uint colorTorso = NPCLoadoutHelper.GetTorsoStyle(target);
 
-				selected = $"Pretty sure I saw a {primaryPalletNames[colorTorso]} Torso..";
+				selected = $"{strTruth} a {primaryPalletNames[colorTorso]} Shirt..";
 
 				break;
 			case 3:
 
 				uint colorLegs = NPCLoadoutHelper.GetLegsStyle(target);
 
-				Debug.Log(colorLegs);
-				selected = $"Pretty sure I saw a {primaryPalletNames[colorLegs]} Pants..";
+				selected = $"{strTruth} {primaryPalletNames[colorLegs]} Pants..";
 
 				break;
 			case 4:
 
 				uint colorBoots = NPCLoadoutHelper.GetBootsStyle(target);
 
-				Debug.Log(colorBoots);
-				selected = $"Pretty sure I saw a {secondaryPalletNames[colorBoots]} Boots..";
+				selected = $"{strTruth} {secondaryPalletNames[colorBoots]} Boots..";
 
 				break;
 			case 5:
 
 				uint colorGloves = NPCLoadoutHelper.GetGlovesStyle(target);
 
-				Debug.Log(colorGloves);
-				selected = $"Pretty sure I saw a {secondaryPalletNames[colorGloves]} Gloves..";
+				selected = $"{strTruth} {secondaryPalletNames[colorGloves]} Gloves..";
 
 				break;
 		}

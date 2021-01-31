@@ -76,8 +76,24 @@ public class PlayerController : MonoBehaviour {
 		bounceTimer += Time.deltaTime * bounceSpeed;
 		headCam.transform.localPosition = cameraPos + (Vector3.up * bounceCurve.Evaluate(bounceTimer % 1) * bounceStrength * movementDelta.magnitude);
 
-		transform.position += transform.forward * movementDelta.z * speed * Time.deltaTime;
-		transform.position += transform.right * movementDelta.x * speed * Time.deltaTime;
+		
+		// Collision Detection
+		Vector3 projectedZPosition = transform.position;
+		projectedZPosition += transform.forward * movementDelta.z * speed * Time.deltaTime;
+
+		Vector3 positionDeltaZ = projectedZPosition - transform.position;
+		if (!Physics.BoxCast(transform.position, Vector3.one * 0.5f, positionDeltaZ.normalized, Quaternion.identity, positionDeltaZ.magnitude, ~LayerMask.NameToLayer("City"))) {
+			transform.position = projectedZPosition;
+		}
+
+		Vector3 projectedXPosition = transform.position;
+		projectedXPosition += transform.right * movementDelta.x * speed * Time.deltaTime;
+
+		Vector3 positionDeltaX = projectedXPosition - transform.position;
+		if (!Physics.BoxCast(transform.position, Vector3.one * 0.5f, positionDeltaX.normalized, Quaternion.identity, positionDeltaX.magnitude, ~LayerMask.NameToLayer("City"))) {
+			transform.position = projectedXPosition;
+		}
+
 	}
 
 	private void UpdateCamera() {
