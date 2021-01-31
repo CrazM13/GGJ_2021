@@ -88,16 +88,16 @@ public static class NPCLoadoutHelper {
 		bool hasBeard = Random.Range(0, 2) == 1;
 		byte beardStyleIndex = (byte) Random.Range(0, 10);
 
-		byte torsoTypeIndex = (byte) Random.Range(0, 4);
+		byte torsoTypeIndex = 3;//(byte) Random.Range(0, 4);
 		byte torsoStyleIndex = (byte) Random.Range(0, 10);
 
-		byte legsTypeIndex = (byte) Random.Range(0, 4);
+		byte legsTypeIndex = 3;//(byte) Random.Range(0, 4);
 		byte legsStyleIndex = (byte) Random.Range(0, 10);
 
-		bool hasBoots = Random.Range(0, 2) == 1;
+		bool hasBoots = true;//Random.Range(0, 2) == 1;
 		byte bootsStyleIndex = (byte) Random.Range(0, 8);
 
-		bool hasGloves = Random.Range(0, 2) == 1;
+		bool hasGloves = true;//Random.Range(0, 2) == 1;
 		byte glovesStyleIndex = (byte) Random.Range(0, 8);
 
 		return CreateLoadoutString(hasHat, hatStyleIndex, hasBeard, beardStyleIndex, torsoTypeIndex, torsoStyleIndex, legsTypeIndex, legsStyleIndex, hasBoots, bootsStyleIndex, hasGloves, glovesStyleIndex);

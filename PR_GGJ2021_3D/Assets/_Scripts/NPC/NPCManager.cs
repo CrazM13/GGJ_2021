@@ -17,6 +17,7 @@ public class NPCManager : MonoBehaviour {
 	void Awake() {
 		targetLoadout = NPCLoadoutHelper.CreateRandomLoadoutString();
 
+		targetNPC.SetManager(this);
 		targetNPC.SetLoadout(targetLoadout, settings);
 		targetNPC.TeleportToTargetNode(startingPositions[Random.Range(0, startingPositions.Length)]);
 
@@ -27,6 +28,7 @@ public class NPCManager : MonoBehaviour {
 				tmpLoadout = NPCLoadoutHelper.CreateRandomLoadoutString();
 			} while (tmpLoadout == targetLoadout);
 
+			npc.SetManager(this);
 			npc.SetLoadout(tmpLoadout, settings);
 			npc.TeleportToTargetNode(startingPositions[Random.Range(0, startingPositions.Length)]);
 		}

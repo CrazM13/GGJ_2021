@@ -9,8 +9,12 @@ public class NPCBase : NavigationMapActor {
 
 	[SerializeField] private GameObject hatModel;
 	[SerializeField] private GameObject beardModel;
+	[SerializeField] private Material torsoMat;
+	[SerializeField] private Material legsMat;
+	[SerializeField] private Material bootsMat;
+	[SerializeField] private Material glovesMat;
 
-	private NPCManager manager;
+	[SerializeField] protected NPCManager manager;
 
 	private Animator animator;
 
@@ -68,6 +72,7 @@ public class NPCBase : NavigationMapActor {
 			uint style = NPCLoadoutHelper.GetTorsoStyle(loadoutString);
 
 			// Apply torso model
+			torsoMat.color = settings.clothesPallet[style];
 		}
 
 		{
@@ -75,18 +80,21 @@ public class NPCBase : NavigationMapActor {
 			uint style = NPCLoadoutHelper.GetLegsStyle(loadoutString);
 
 			// Apply legs model
+			legsMat.color = settings.clothesPallet[style];
 		}
 
 		if (NPCLoadoutHelper.HasBoots(loadoutString)) {
 			uint style = NPCLoadoutHelper.GetBootsStyle(loadoutString);
 
 			// Apply boots model
+			bootsMat.color = settings.extraPallet[style];
 		}
 
 		if (NPCLoadoutHelper.HasGloves(loadoutString)) {
 			uint style = NPCLoadoutHelper.GetGlovesStyle(loadoutString);
 
 			// Apply gloves model
+			glovesMat.color = settings.extraPallet[style];
 		}
 	}
 

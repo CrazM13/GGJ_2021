@@ -5,7 +5,6 @@ using UnityEngine;
 public class NPCSleuth : NPCBase {
 
 	[SerializeField] private TabletUI tablet;
-	[SerializeField] private NPCManager manager;
 
 	public override string OnInteract() {
 		return "Talk to me when you know who it is";
