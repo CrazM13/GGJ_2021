@@ -133,9 +133,7 @@ public class TabletUI : MonoBehaviour, IPointerClickHandler {
 	public void ModifyGlovesStyle(uint glovesStyleIndex) {
 		//if (!NPCLoadoutHelper.HasGloves(storedLoadout)) return;
 
-		Debug.Log(NPCLoadoutHelper.ToString(storedLoadout));
 		storedLoadout = NPCLoadoutHelper.ModifyGlovesStyle(storedLoadout, glovesStyleIndex);
-		Debug.Log(NPCLoadoutHelper.ToString(storedLoadout));
 		npc.SetLoadout(storedLoadout, settings);
 	}
 

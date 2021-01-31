@@ -11,6 +11,9 @@ public class NPCSleuth : NPCBase {
 	}
 
 	public override void OnArrest() {
+		Debug.Log("Target => " + NPCLoadoutHelper.ToString(manager.GetTargetLoadout()));
+		Debug.Log("Tablet => " + NPCLoadoutHelper.ToString(tablet.GetStoredLoadout()));
+
 		if (tablet.GetStoredLoadout() == manager.GetTargetLoadout()) {
 			ScenesManager.instance.Win();
 		} else {

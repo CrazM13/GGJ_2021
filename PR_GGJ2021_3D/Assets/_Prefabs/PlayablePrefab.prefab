@@ -2019,7 +2019,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1c1d404fdf5a4d478993520b8f97986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 0}
+  manager: {fileID: 8352168340806342013}
   player: {fileID: 2322997568015269741}
   textbox: {fileID: 2322997566470609744}
   text: {fileID: 2322997567958265495}
@@ -8379,7 +8379,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: I hear this is a test message...
+  m_Text: 
 --- !u!1 &2322997567984906077
 GameObject:
   m_ObjectHideFlags: 0
@@ -9618,6 +9618,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6040502617287881583, guid: c5f5ee823e5986444b040fe1a4d226f3,
         type: 3}
+      propertyPath: canPath
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6040502617287881583, guid: c5f5ee823e5986444b040fe1a4d226f3,
+        type: 3}
       propertyPath: legsMat
       value: 
       objectReference: {fileID: 2100000, guid: 4c4d7e1d76ddf5e49950659ee2279949, type: 2}
@@ -9641,6 +9646,11 @@ PrefabInstance:
       propertyPath: glovesMat
       value: 
       objectReference: {fileID: 2100000, guid: cce7ae1c45994fe48be3393c0cd45e4b, type: 2}
+    - target: {fileID: 6040502617591250942, guid: c5f5ee823e5986444b040fe1a4d226f3,
+        type: 3}
+      propertyPath: canPath
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6040502617591250942, guid: c5f5ee823e5986444b040fe1a4d226f3,
         type: 3}
       propertyPath: legsMat

@@ -94,10 +94,10 @@ public static class NPCLoadoutHelper {
 		byte legsTypeIndex = 3;//(byte) Random.Range(0, 4);
 		byte legsStyleIndex = (byte) Random.Range(0, 10);
 
-		bool hasBoots = true;//Random.Range(0, 2) == 1;
+		bool hasBoots = false;//Random.Range(0, 2) == 1;
 		byte bootsStyleIndex = (byte) Random.Range(0, 8);
 
-		bool hasGloves = true;//Random.Range(0, 2) == 1;
+		bool hasGloves = false;//Random.Range(0, 2) == 1;
 		byte glovesStyleIndex = (byte) Random.Range(0, 8);
 
 		return CreateLoadoutString(hasHat, hatStyleIndex, hasBeard, beardStyleIndex, torsoTypeIndex, torsoStyleIndex, legsTypeIndex, legsStyleIndex, hasBoots, bootsStyleIndex, hasGloves, glovesStyleIndex);
@@ -230,15 +230,9 @@ public static class NPCLoadoutHelper {
 	}
 
 	public static uint ModifyGlovesStyle(uint loadout, uint glovesStyleIndex) {
-		Debug.Log("Before = " + System.Convert.ToString(loadout, 2));
-
 		loadout &= ~((uint) NPCLoadoutElements.GLOVES_STYLE);
 
-		Debug.Log("During = " + System.Convert.ToString(loadout, 2));
-
 		loadout |= glovesStyleIndex;
-
-		Debug.Log("After = " + System.Convert.ToString(loadout, 2));
 
 		return loadout;
 	}
